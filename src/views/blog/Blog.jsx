@@ -3,23 +3,40 @@ import { Container, Image } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import BlogAuthor from "../../components/blog/blog-author/BlogAuthor";
 import BlogLike from "../../components/likes/BlogLike";
-import posts from "../../data/posts.json";
 import "./styles.css";
 const Blog = (props) => {
-  const [blog, setBlog] = useState({});
+  const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const navigate = useNavigate();
-  useEffect(() => {
-    const { id } = params;
-    const blog = posts.find((post) => post._id.toString() === id);
 
-    if (blog) {
-      setBlog(blog);
-      setLoading(false);
-    } else {
-      navigate("/404");
+  const url = new URL("http://localhost:3001/blogPosts");
+
+  const { id } = params;
+  const getBlogPosts = async () => {
+    try {
+      const res = await fetch(url.href);
+      if (res.ok) {
+        const blogPostsData = await res.json();
+        const blog = blogPostsData?.find((post) => post.id === id);
+        if (blog) {
+          setBlog(blog);
+          setLoading(false);
+        } else {
+          navigate("/404");
+        }
+      } else {
+        console.log("error");
+        navigate("/404");
+      }
+    } catch (error) {
+      console.error(error);
     }
+  };
+
+  useEffect(() => {
+    getBlogPosts();
+    // eslint-disable-next-line
   }, []);
 
   if (loading) {
