@@ -26,7 +26,7 @@ const NewBlogPost = (props) => {
         category: category,
         content: html,
         // following lines will be changed soon
-        cover: "https://picsum.photos/800/400",
+        cover: "",
         readTime: {
           value: 3,
           unit: "minutes",
