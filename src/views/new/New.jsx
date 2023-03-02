@@ -18,6 +18,8 @@ const NewBlogPost = (props) => {
   const url = new URL("http://localhost:3001/blogPosts");
   const [title, setTitle] = useState(null);
   const [category, setCategory] = useState(null);
+  const [authorName, setAuthorName] = useState(null);
+  // const [readTime, setReadTime] = useState(null);
 
   const publishNewBlogPost = async () => {
     try {
@@ -32,7 +34,7 @@ const NewBlogPost = (props) => {
           unit: "minutes",
         },
         author: {
-          name: "Yasir Ozdemir",
+          name: authorName,
           id: "123456",
         },
       };
@@ -67,6 +69,31 @@ const NewBlogPost = (props) => {
         <Form.Group
           controlId="blog-form"
           className="mt-3"
+          value={authorName}
+          onChange={(e) => {
+            setAuthorName(e.target.value);
+          }}
+        >
+          <Form.Label>Author</Form.Label>
+          <Form.Control size="lg" placeholder="Author" />
+        </Form.Group>
+        {/* <Form.Group
+          controlId="blog-form"
+          className="mt-3 d-flex"
+          value={author}
+        >
+          <div style={{ flexGrow: 1 }}>
+            <Form.Label>Read Time</Form.Label>
+            <Form.Control size="lg" placeholder="Read Time" />
+          </div>
+          <div style={{ flexGrow: 1 }}>
+            <Form.Label>Read Time Unit (e.g. min)</Form.Label>
+            <Form.Control size="lg" placeholder="Read Time Unit" />
+          </div>
+        </Form.Group> */}
+        <Form.Group
+          controlId="blog-form"
+          className="mt-3"
           value={title}
           onChange={(e) => {
             setTitle(e.target.value);
@@ -85,11 +112,11 @@ const NewBlogPost = (props) => {
         >
           <Form.Label>Category</Form.Label>
           <Form.Control size="lg" as="select">
-            <option>Category1</option>
-            <option>Category2</option>
-            <option>Category3</option>
-            <option>Category4</option>
-            <option>Category5</option>
+            <option>Science</option>
+            <option>Technology</option>
+            <option>Health</option>
+            <option>Daily Life</option>
+            <option>Space</option>
           </Form.Control>
         </Form.Group>
         <Form.Group controlId="blog-content" className="mt-3">

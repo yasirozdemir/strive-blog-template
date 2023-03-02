@@ -7,4 +7,4 @@
 
 1. use Redux to fetch data
 2. clean unnecessary files
-3. add author, cover, read time things
+3. add cover, read time things
