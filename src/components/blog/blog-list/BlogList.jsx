@@ -1,21 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import posts from "../../../data/posts.json";
 import BlogItem from "../blog-item/BlogItem";
 
 const BlogList = (props) => {
+  const [blogPosts, setBlogPosts] = useState([]);
+  const url = new URL("http://localhost:3001/blogPosts");
+
+  const getBlogPosts = async () => {
+    try {
+      const res = await fetch(url.href);
+      if (res.ok) {
+        const blogPostsData = await res.json();
+        setBlogPosts(blogPostsData);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getBlogPosts();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <Row>
-      {posts.map((post) => (
-        <Col
-          md={4}
-          style={{
-            marginBottom: 50,
-          }}
-        >
-          <BlogItem key={post.title} {...post} />
-        </Col>
-      ))}
+      {blogPosts &&
+        blogPosts.map((post) => (
+          <Col
+            md={4}
+            style={{
+              marginBottom: 50,
+            }}
+          >
+            <BlogItem key={post.title} {...post} />
+          </Col>
+        ))}
     </Row>
   );
 };
