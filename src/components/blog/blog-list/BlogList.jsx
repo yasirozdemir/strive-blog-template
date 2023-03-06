@@ -4,11 +4,11 @@ import BlogItem from "../blog-item/BlogItem";
 
 const BlogList = (props) => {
   const [blogPosts, setBlogPosts] = useState([]);
-  const url = new URL("http://localhost:3001/blogPosts");
+  const url = process.env.REACT_APP_URL;
 
   const getBlogPosts = async () => {
     try {
-      const res = await fetch(url.href);
+      const res = await fetch(url + "/blogPosts");
       if (res.ok) {
         const blogPostsData = await res.json();
         setBlogPosts(blogPostsData);

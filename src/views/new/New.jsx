@@ -15,7 +15,7 @@ const NewBlogPost = (props) => {
     setHTML(html);
   }, [editorState]);
 
-  const url = new URL("http://localhost:3001/blogPosts");
+  const url = process.env.REACT_APP_URL;
   const [title, setTitle] = useState(null);
   const [category, setCategory] = useState(null);
   const [authorName, setAuthorName] = useState(null);
@@ -39,7 +39,7 @@ const NewBlogPost = (props) => {
         },
       };
 
-      const res = await fetch(url.href, {
+      const res = await fetch(url + "/blogPosts", {
         method: "POST",
         body: JSON.stringify(newBlogPost),
         headers: {
@@ -49,7 +49,7 @@ const NewBlogPost = (props) => {
       if (res.ok) {
         setHTML("");
         setTitle("");
-        setCategory("Category 1");
+        setCategory("Science");
       } else {
         console.log("error when posting!");
       }
@@ -77,20 +77,6 @@ const NewBlogPost = (props) => {
           <Form.Label>Author</Form.Label>
           <Form.Control size="lg" placeholder="Author" />
         </Form.Group>
-        {/* <Form.Group
-          controlId="blog-form"
-          className="mt-3 d-flex"
-          value={author}
-        >
-          <div style={{ flexGrow: 1 }}>
-            <Form.Label>Read Time</Form.Label>
-            <Form.Control size="lg" placeholder="Read Time" />
-          </div>
-          <div style={{ flexGrow: 1 }}>
-            <Form.Label>Read Time Unit (e.g. min)</Form.Label>
-            <Form.Control size="lg" placeholder="Read Time Unit" />
-          </div>
-        </Form.Group> */}
         <Form.Group
           controlId="blog-form"
           className="mt-3"
